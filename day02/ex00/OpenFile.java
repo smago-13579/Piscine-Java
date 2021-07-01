@@ -1,3 +1,4 @@
+package com.company;
 
 import java.io.*;
 import java.util.*;
@@ -9,7 +10,8 @@ public class OpenFile {
     public OpenFile(String str) {
         try (FileInputStream fin = new FileInputStream(str)) {
             fin.read(buffer, 0, 8);
-            this.buf = this.toString(8);
+            this.toStr();
+            fin.close();
         }
         catch(IOException ex) {
             System.out.println(ex.getMessage());
@@ -40,9 +42,9 @@ public class OpenFile {
         return (str);
     }
 
-    private String toString(int len) {
+    private void    toStr() {
         String str = "";
-        for (int i = 0; i < len; i++) {
+        for (int i = 0; i < 8; i++) {
             if (buffer[i] < 0) {
                 str += this.toHex(256 + (int)buffer[i]) + " ";
             }
@@ -50,7 +52,7 @@ public class OpenFile {
                 str += this.toHex((int)buffer[i]) + " ";
             }
         }
-        System.out.println(str);
-        return str;
+        str = str.substring(0, str.length() - 1);
+        this.buf = str;
     }
 }
