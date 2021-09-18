@@ -10,8 +10,8 @@ public class Program {
         while (scan.hasNextInt()) {
             num = scan.nextInt();
             if (num != 42) {
-                num = SumOfNum(num);
-                res += PrimeNum(num);
+                num = sumOfNum(num);
+                res += primeNum(num);
             }
             else {
                 System.out.print("Count of coffee - request - ");
@@ -23,7 +23,7 @@ public class Program {
         scan.close();
     }
 
-    public static int PrimeNum(int num) {
+    public static int primeNum(int num) {
         int i = 2;
 
         if (num < 2) {
@@ -43,7 +43,7 @@ public class Program {
         }
     }
 
-    public static int SumOfNum(int num) {
+    public static int sumOfNum(int num) {
         int result = 0;
         while (num != 0) {
             result += num % 10;

@@ -1,22 +1,22 @@
 import java.util.Scanner;
 
 public class Program {
-    public static void IllegalArgument() {
+    public static void illegalArgument() {
         System.err.println("Illegal Argument");
         System.exit(-1);
     }
 
-    public static int ScanInt(Scanner scan) {
+    public static int scanInt(Scanner scan) {
         if (scan.hasNextInt() == false) {
             scan.close();
-            IllegalArgument();
+            illegalArgument();
         }
         int num = scan.nextInt();
 
         return num;
     }
 
-    public static void PrintTests(long tests) {
+    public static void printTests(long tests) {
         long len = 1;
         long i = 0;
         for (; tests / len > 10; len *= 10);
@@ -65,21 +65,21 @@ public class Program {
             str = scan.next();
 
             if (str.equals("42")) {
-                PrintTests(tests);
+                printTests(tests);
                 break;
             }
             else if (str.equals("Week") == false) {
                 scan.close();
-                IllegalArgument();
+                illegalArgument();
             }
-            if (week != ScanInt(scan)) {
+            if (week != scanInt(scan)) {
                 scan.close();
-                IllegalArgument();
+                illegalArgument();
             }
             for (int i = 0; i < 5; i++) {
-                if ((new_eval = ScanInt(scan)) < 1 || new_eval > 9) {
+                if ((new_eval = scanInt(scan)) < 1 || new_eval > 9) {
                     scan.close();
-                    IllegalArgument();
+                    illegalArgument();
                 }
                 if (last_eval > new_eval) {
                     last_eval = new_eval;
@@ -87,7 +87,7 @@ public class Program {
             }
             tests = tests * 10 + last_eval;
             if (week == 18) {
-                PrintTests(tests);
+                printTests(tests);
                 break;
             }
         }
