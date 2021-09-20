@@ -3,24 +3,39 @@ import java.util.Scanner;
 
 public class Program {
 
-    public static void printEmptyLine(int[][] arr, int i, int index) {
-        float max_n = (float)arr[0][1];
-        float part = (float)arr[0][1] / 10;
-        int coeff = 1;
-
-        for ( ; (float)arr[i][1] < max_n - (part * (float)coeff); coeff++);
-
-        for (; i + 1 < index && (float)arr[i + 1][1] < max_n - (part * (float)coeff); coeff++) {
-            for (int j = 0; j < i + 1; j++) {
-                System.out.print("#\t");
-                if (j == i) {
-                    System.out.println();
-                }
+    public static void printGrid(int i) {
+        for (int j = 0; j <= i; j++) {
+            System.out.print("#\t");
+            if (j == i) {
+                System.out.println();
             }
         }
     }
 
-    public static int printHash(int[][] arr, int i, int index) {
+    public static void printEmptyLine(int[][] arr, int i, int index) {
+        float part = (float)arr[0][1] / 10;
+        float max_n = (float)arr[0][1];
+
+        while ((float)arr[i][1] < max_n) {
+            max_n -= part;
+        }
+
+        if (i + 1 == index) {
+            while (max_n > 0) {
+                printGrid(i);
+                max_n -= part;
+            }
+        } else {
+            max_n -= part;
+            int num = arr[i + 1][1];
+            while (num < max_n) {
+                printGrid(i);
+                max_n -= part;
+            }
+        }
+    }
+
+    public static int printNum(int[][] arr, int i, int index) {
         float max_n = (float)arr[0][1];
         float part = (float)arr[0][1] / 10;
         int coeff = 1;
@@ -40,22 +55,18 @@ public class Program {
             }
         }
         System.out.println();
-
         printEmptyLine(arr, i, index);
 
         return i;
     }
 
     public static void printHistogram(int[][] arr, int index) {
-        float max_n = (float)arr[0][1];
-        float part = max_n / 10;
-
         for (int i = 0; i < index; i++) {
             int len = i;
             int num = arr[i][1];
 
             if (i == 0) {
-                while (arr[i + 1][1] == num) {
+                while (i + 1 < index && arr[i + 1][1] == num) {
                     i++;
                 }
                 for (; len <= i; len++) {
@@ -64,9 +75,13 @@ public class Program {
                 System.out.println();
                 printEmptyLine(arr, i, index);
             } else {
-                i = printHash(arr, i, index);
+                i = printNum(arr, i, index);
             }
         }
+        for (int i = 0; i < index; i++) {
+            System.out.print((char)arr[i][0] + "\t");
+        }
+        System.out.println();
     }
 
     public static int fillArray(int[][] arr, char c, int index) {
@@ -96,7 +111,7 @@ public class Program {
 
             int i = left - 1;
             for (; i >= 0; i--) {
-                if (tmp[1] > arr[i][1] || (tmp[1] == arr[i][1] && tmp[0] > arr[i][0])) {
+                if (tmp[1] > arr[i][1] || (tmp[1] == arr[i][1] && tmp[0] < arr[i][0])) {
                     arr[i + 1] = arr[i];
                 } else {
                     break;
