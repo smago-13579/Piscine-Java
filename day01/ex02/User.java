@@ -1,29 +1,26 @@
-import java.util.UUID;
-
 public class User {
 
-    private int id;
+    private Integer id;
     private String name;
-    private int balance;
+    private Integer balance;
 
     User(String name, int balance) {
+        this.name = name;
+
         if (balance < 0) {
-            System.err.println("Can't create user " + name);
-            System.err.println("Negative balance!!!");
-        }
-        else {
-            this.name = name;
+            this.balance = 0;
+            System.err.println("Incorrect balance!!!");
+        } else {
             this.balance = balance;
-            this.id = UserIdsGenerator.getInstance().generateId();
-            System.out.println("New User Created!");
-            userInfo();
         }
+        this.id = UserIdsGenerator.getInstance().generateId();
     }
 
-    public  void    userInfo() {
-        System.out.print("Name: " + this.name);
-        System.out.print("; Balance: " + this.balance);
-        System.out.println("; Id: " + this.id);
+    @Override
+    public String toString() {
+        return "User{ id=" + this.id +
+                ", name='" + this.name + "\'" +
+                ", balance=" + this.balance + " }";
     }
 
     public  String    getName() {
@@ -38,11 +35,10 @@ public class User {
         return this.balance;
     }
 
-    public  void    setBalance(int balance) {
+    public  void    setBalance(Integer balance) {
         if (balance < 0) {
             System.err.println("Can't set negative balance");
-        }
-        else {
+        } else {
             this.balance = balance;
         }
     }

@@ -1,36 +1,51 @@
 import java.util.UUID;
 
 public class Program {
+    private static Integer userId = 0;
 
     public static void main(String[] args) {
-        int user_id = 0;
-        int amount = 100;
-        User Bob = new User("Bob", 1000, user_id++);
-        User Nick = new User("Nick", 1000, user_id++);
-        UUID id1 = UUID.randomUUID();
-        UUID id2 = UUID.randomUUID();
-        UUID id3 = UUID.randomUUID();
-        UUID id4 = UUID.randomUUID();
+        Integer amount = 100;
+        User Bob = new User("Bob", 1000, userId++);
+        User Nick = new User("Nick", 1000, userId++);
         Transaction.TransferCategory debit = Transaction.TransferCategory.debit;
         Transaction.TransferCategory credit = Transaction.TransferCategory.credit;
 
-        Transaction Tr1 = new Transaction(id1, Bob, Nick, amount, debit);
-        Transaction Tr2 = new Transaction(id1, Bob, Nick, -amount, credit);
-        Bob.setBalance(Bob.getBalance() + amount);
-        Nick.setBalance(Nick.getBalance() - amount);
-        Bob.userInfo();
-        Nick.userInfo();
+        Transaction trDebit1 = new Transaction(Bob, Nick, amount, debit);
+        Transaction trCredit1 = new Transaction(Bob, Nick, -amount, credit);
 
-        Transaction Tr3 = new Transaction(id2, Nick, Bob, -500, credit);
-        Transaction Tr4 = new Transaction(id2, Nick, Bob, 500, debit);
-        Bob.setBalance(Bob.getBalance() - 500);
-        Nick.setBalance(Nick.getBalance() + 500);
-        Bob.userInfo();
-        Nick.userInfo();
+        if (isValid(trDebit1) && isValid(trCredit1)) {
+            Bob.setBalance(Bob.getBalance() + amount);
+            Nick.setBalance(Nick.getBalance() - amount);
+        }
+        System.out.println(Bob);
+        System.out.println(Nick);
+        System.out.println(trDebit1);
+        System.out.println(trCredit1);
 
-        User fault = new User("Tom", -100, user_id++);
-        Transaction TrFault1 = new Transaction(id3, Bob, Nick, amount, credit);
-        Transaction TrFault3 = new Transaction(id4, Bob, Nick, 2000, debit);
+        Transaction trDebit2 = new Transaction(Nick, Bob, -500, credit);
+        Transaction trCredit2 = new Transaction(Nick, Bob, 500, debit);
+
+        if (isValid(trDebit2) && isValid(trCredit2)) {
+            Bob.setBalance(Bob.getBalance() - 500);
+            Nick.setBalance(Nick.getBalance() + 500);
+        }
+        System.out.println(Bob);
+        System.out.println(Nick);
+        System.out.println(trDebit2);
+        System.out.println(trCredit2);
+
+        System.out.println("\nINCORRECT CASES");
+        User fault = new User("Tom", -100, userId++);
+        Transaction TrFault1 = new Transaction(Bob, Nick, amount, credit);
+        Transaction TrFault2 = new Transaction(Bob, Nick, 2000, debit);
         Nick.setBalance(Nick.getBalance() - 2000);
+    }
+
+    public static boolean isValid(Transaction transaction) {
+        if (transaction.getUUID() != null) {
+            return true;
+        }
+
+        return false;
     }
 }

@@ -1,5 +1,3 @@
-import java.util.UUID;
-
 public class User {
 
     private int id;
@@ -18,7 +16,7 @@ public class User {
             this.id = UserIdsGenerator.getInstance().generateId();
             list = new TransactionsLinkedList();
             System.out.println("New User Created!");
-            userInfo();
+            this.toString();
         }
     }
 

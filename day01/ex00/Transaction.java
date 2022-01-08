@@ -7,58 +7,58 @@ public class Transaction {
         credit
     }
 
-    private UUID ID;
-    private User Recipient;
-    private User Sender;
-    private int TransferAmount;
+    private UUID id;
+    private User recipient;
+    private User sender;
+    private Integer transferAmount;
     private TransferCategory category;
 
-    Transaction(UUID ID, User Recipient, User Sender, int amount, TransferCategory category) {
+    Transaction(User recipient, User sender, Integer amount, TransferCategory category) {
         if ((amount > 0 && category == TransferCategory.credit) ||
                 (amount < 0 && category == TransferCategory.debit)) {
-            System.err.println("Can't create Transaction");
             System.err.println("Wrong Transfer Category");
-        }
-        else if (Sender.getBalance() < amount) {
-            System.err.println("Can't create Transaction");
+        } else if ((category == TransferCategory.debit && sender.getBalance() < amount) ||
+                (category == TransferCategory.credit && sender.getBalance() < -amount)) {
             System.err.println("Insufficient balance");
-        }
-        else {
-            this.ID = ID;
-            this.Recipient = Recipient;
-            this.Sender = Sender;
-            this.TransferAmount = amount;
+        } else {
+            this.id = UUID.randomUUID();
+            this.recipient = recipient;
+            this.sender = sender;
+            this.transferAmount = amount;
             this.category = category;
-
-            TransactionInfo();
         }
     }
 
-    void    TransactionInfo() {
+    @Override
+    public String toString() {
+        String str = "Transaction{ ";
+
         if (this.category == TransferCategory.debit) {
-            System.out.println(this.Recipient.getName() + " -> " + this.Sender.getName() + ", +"
-                    + this.TransferAmount + ", INCOME, " + this.ID);
+            str += this.recipient.getName() + " -> " + this.sender.getName() + ", +"
+                    + this.transferAmount + ", INCOME, " + this.id + " }";
         }
         else {
-            System.out.println(this.Sender.getName() + " -> " + this.Recipient.getName() + ", "
-                    + this.TransferAmount + ", OUTCOME, " + this.ID);
+            str += this.sender.getName() + " -> " + this.recipient.getName() + ", "
+                    + this.transferAmount + ", OUTCOME, " + this.id + " }";
         }
+
+        return str;
     }
 
     UUID    getUUID() {
-        return this.ID;
+        return this.id;
     }
 
     User    getRecipient() {
-        return this.Recipient;
+        return this.recipient;
     }
 
     User    getSender() {
-        return this.Sender;
+        return this.sender;
     }
 
     int     getTransferAmount() {
-        return this.TransferAmount;
+        return this.transferAmount;
     }
 
     TransferCategory    getTransferCategory() {

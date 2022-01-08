@@ -1,20 +1,16 @@
 
 public class UserIdsGenerator {
-    private static final UserIdsGenerator INSTANCE = new UserIdsGenerator();
-    private int Id = 0;
+    private static UserIdsGenerator instance = new UserIdsGenerator();
+    private Integer id = 0;
 
     private UserIdsGenerator() {
     }
 
     public static UserIdsGenerator getInstance() {
-        return INSTANCE;
+        return instance;
     }
 
     public int generateId() {
-        return ++Id;
-    }
-
-    public int getId() {
-        return Id;
+        return id++;
     }
 }

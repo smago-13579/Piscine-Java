@@ -7,6 +7,10 @@ public class Program {
         User Nick = new User("Nick", 1000);
         User Tom = new User("Tom", 500);
         User Kate = new User("Kate", 670);
-        System.out.println("Last generated Id: " + UserIdsGenerator.getInstance().getId());
+
+        System.out.println(Bob);
+        System.out.println(Nick);
+        System.out.println(Tom);
+        System.out.println(Kate);
     }
 }
