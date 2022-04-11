@@ -9,11 +9,11 @@ public class Program {
 
         while (scan.hasNextInt()) {
             num = scan.nextInt();
+
             if (num != 42) {
                 num = sumOfNum(num);
                 res += primeNum(num);
-            }
-            else {
+            } else {
                 System.out.print("Count of coffee - request - ");
                 System.out.println(res);
                 scan.close();
@@ -28,23 +28,23 @@ public class Program {
 
         if (num < 2) {
             return 0;
-        }
-        else if (num == 2) {
+        } else if (num == 2) {
             return 1;
         }
+
         while (i * i < num && num % i != 0) {
             i++;
         }
+
         if (num % i != 0) {
             return 1;
         }
-        else {
-            return 0;
-        }
+        return 0;
     }
 
     public static int sumOfNum(int num) {
         int result = 0;
+
         while (num != 0) {
             result += num % 10;
             num /= 10;

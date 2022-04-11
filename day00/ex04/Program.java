@@ -3,44 +3,74 @@ import java.util.Scanner;
 
 public class Program {
 
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String str = scanner.nextLine();
+        int[][] arr = new int[65536][2];
+        int index = 0;
+
+        for (int i = 0; i < str.length(); i++) {
+            index += fillArray(arr, str.charAt(i), index);
+        }
+
+        for (int left = 1; left < index; left++) {
+            int[] tmp = arr[left];
+            int i = left - 1;
+
+            for (; i >= 0; i--) {
+                if (tmp[1] > arr[i][1] || (tmp[1] == arr[i][1] && tmp[0] < arr[i][0])) {
+                    arr[i + 1] = arr[i];
+                } else {
+                    break;
+                }
+            }
+            arr[i + 1] = tmp;
+        }
+
+        if (index > 10) {
+            index = 10;
+        }
+        printHistogram(arr, index);
+    }
+
     public static void printGrid(int i) {
         for (int j = 0; j <= i; j++) {
             System.out.print("#\t");
-            if (j == i) {
-                System.out.println();
-            }
         }
+        System.out.println();
     }
 
     public static void printEmptyLine(int[][] arr, int i, int index) {
         float part = (float)arr[0][1] / 10;
-        float max_n = (float)arr[0][1];
+        float maxN = (float)arr[0][1];
+        int num;
 
-        while ((float)arr[i][1] < max_n) {
-            max_n -= part;
+        while ((float)arr[i][1] < maxN) {
+            maxN -= part;
         }
 
         if (i + 1 == index) {
-            while (max_n > 0) {
+            while (maxN > 0) {
                 printGrid(i);
-                max_n -= part;
+                maxN -= part;
             }
         } else {
-            max_n -= part;
-            int num = arr[i + 1][1];
-            while (num < max_n) {
+            maxN -= part;
+            num = arr[i + 1][1];
+
+            while (num < maxN) {
                 printGrid(i);
-                max_n -= part;
+                maxN -= part;
             }
         }
     }
 
     public static int printNum(int[][] arr, int i, int index) {
-        float max_n = (float)arr[0][1];
+        float maxN = (float)arr[0][1];
         float part = (float)arr[0][1] / 10;
         int coeff = 1;
 
-        for ( ; (float)arr[i][1] < max_n - (part * (float)coeff); coeff++);
+        for ( ; (float)arr[i][1] < maxN - (part * (float)coeff); coeff++);
 
         for (int j = 0; j < i; j++) {
             System.out.print("#\t");
@@ -48,7 +78,7 @@ public class Program {
         System.out.print(arr[i][1] + "\t");
 
         for (; i + 1 < index; i++) {
-            if ((float)arr[i + 1][1] > max_n - (part * (float)coeff)) {
+            if ((float)arr[i + 1][1] > maxN - (part * (float)coeff)) {
                 System.out.print(arr[i + 1][1] + "\t");
             } else {
                 break;
@@ -69,6 +99,7 @@ public class Program {
                 while (i + 1 < index && arr[i + 1][1] == num) {
                     i++;
                 }
+
                 for (; len <= i; len++) {
                     System.out.print(num + "\t");
                 }
@@ -78,6 +109,7 @@ public class Program {
                 i = printNum(arr, i, index);
             }
         }
+
         for (int i = 0; i < index; i++) {
             System.out.print((char)arr[i][0] + "\t");
         }
@@ -94,34 +126,5 @@ public class Program {
         arr[index][0] = (int)c;
         arr[index][1] += 1;
         return 1;
-    }
-
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        int[][] arr = new int[65536][2];
-        int index = 0;
-
-        String str = scanner.nextLine();
-        for (int i = 0; i < str.length(); i++) {
-            index += fillArray(arr, str.charAt(i), index);
-        }
-
-        for (int left = 1; left < index; left++) {
-            int[] tmp = arr[left];
-
-            int i = left - 1;
-            for (; i >= 0; i--) {
-                if (tmp[1] > arr[i][1] || (tmp[1] == arr[i][1] && tmp[0] < arr[i][0])) {
-                    arr[i + 1] = arr[i];
-                } else {
-                    break;
-                }
-            }
-            arr[i + 1] = tmp;
-        }
-        if (index > 10) {
-            index = 10;
-        }
-        printHistogram(arr, index);
     }
 }
