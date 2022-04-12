@@ -1,8 +1,9 @@
 
 public interface UsersList {
-    public void    addUser(User user);
-    public User    retrieveByID(int id);
-    public User    retrieveByIndex(int index);
-    public int     numberOfUsers();
+    void    addUser(User user);
+    void    addUsers(User... users);
+    User    retrieveByID(int id);
+    User    retrieveByIndex(int index);
+    int     numberOfUsers();
 }
 

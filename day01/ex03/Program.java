@@ -13,8 +13,8 @@ public class Program {
         UUID id2 = UUID.randomUUID();
         UUID id3 = UUID.randomUUID();
         UUID id4 = UUID.randomUUID();
-        Transaction.TransferCategory debit = Transaction.TransferCategory.debit;
-        Transaction.TransferCategory credit = Transaction.TransferCategory.credit;
+        Transaction.TransferCategory debit = Transaction.TransferCategory.DEBIT;
+        Transaction.TransferCategory credit = Transaction.TransferCategory.CREDIT;
 
         Transaction Tr1 = new Transaction(id1, Bob, Nick, 200, debit);
         Transaction Tr2 = new Transaction(id1, Bob, Nick, -200, credit);

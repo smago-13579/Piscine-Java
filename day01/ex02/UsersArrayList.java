@@ -1,9 +1,10 @@
+import java.util.Arrays;
 
 public class UsersArrayList implements UsersList {
 
-    private User[] storage = new User[10];
-    private int capacity = 10;
-    private int size = 0;
+    private User[] storage;
+    private int capacity;
+    private int size;
 
     public UsersArrayList() {
         this.storage = new User[10];
@@ -11,11 +12,10 @@ public class UsersArrayList implements UsersList {
         this.size = 0;
     }
 
-    public void    addUser(User user) throws UserExistException {
+    public void addUser(User user) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getId() == user.getId()) {
-                throw new UserExistException("Exception: User already " +
-                                                "exist - " + user.getName());
+                throw new UserExistException("Exception: User already exist - " + user);
             }
         }
 
@@ -33,6 +33,34 @@ public class UsersArrayList implements UsersList {
         System.out.println("User added: " + user.getName());
     }
 
+    public void addUsers(User... users) {
+        for (int i = 0; i < users.length; i++) {
+            addUser(users[i]);
+        }
+    }
+
+    public User retrieveByID(int id) {
+        for (int i = 0; i < size; i++) {
+            if (storage[i].getId() == id) {
+                return storage[i];
+            }
+        }
+        throw new UserNotFoundException("Exception: User Not Found by id " + id);
+    }
+
+    public User retrieveByIndex(int index) {
+        if (index >= size) {
+            throw new WrongIndexException("Exception: User Not Found by index: "
+                    + index + ". Last index - " + (size - 1));
+        }
+
+        return storage[index];
+    }
+
+    public int numberOfUsers() {
+        return size;
+    }
+
     @Override
     public String toString() {
         String str = "UsersArrayList { " +
@@ -45,26 +73,5 @@ public class UsersArrayList implements UsersList {
         str += "}";
 
         return str;
-    }
-
-    public User    retrieveByID(int id) throws UserNotFoundException {
-        for (int i = 0; i < size; i++) {
-            if (storage[i].getId() == id) {
-                return storage[i];
-            }
-        }
-        throw new UserNotFoundException("Exception: User Not Found by id " + id);
-    }
-
-    public User    retrieveByIndex(int index) throws UserNotFoundException {
-        if (index >= size) {
-            throw new UserNotFoundException("Exception: User Not Found by index " + index);
-        }
-
-        return storage[index];
-    }
-
-    public int  numberOfUsers() {
-        return size;
     }
 }

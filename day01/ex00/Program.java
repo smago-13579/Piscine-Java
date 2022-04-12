@@ -1,5 +1,3 @@
-import java.util.UUID;
-
 public class Program {
     private static Integer userId = 0;
 
@@ -7,8 +5,8 @@ public class Program {
         Integer amount = 100;
         User Bob = new User("Bob", 1000, userId++);
         User Nick = new User("Nick", 1000, userId++);
-        Transaction.TransferCategory debit = Transaction.TransferCategory.debit;
-        Transaction.TransferCategory credit = Transaction.TransferCategory.credit;
+        Transaction.TransferCategory debit = Transaction.TransferCategory.DEBIT;
+        Transaction.TransferCategory credit = Transaction.TransferCategory.CREDIT;
 
         Transaction trDebit1 = new Transaction(Bob, Nick, amount, debit);
         Transaction trCredit1 = new Transaction(Bob, Nick, -amount, credit);
@@ -34,10 +32,10 @@ public class Program {
         System.out.println(trDebit2);
         System.out.println(trCredit2);
 
-        System.out.println("\nINCORRECT CASES");
-        User fault = new User("Tom", -100, userId++);
-        Transaction TrFault1 = new Transaction(Bob, Nick, amount, credit);
-        Transaction TrFault2 = new Transaction(Bob, Nick, 2000, debit);
+        System.out.println("\nINCORRECT CASES:");
+        User uFault = new User("Tom", -100, userId++);
+        Transaction trFault1 = new Transaction(Bob, Nick, amount, credit);
+        Transaction trFault2 = new Transaction(Bob, Nick, 2000, debit);
         Nick.setBalance(Nick.getBalance() - 2000);
     }
 

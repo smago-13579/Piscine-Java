@@ -12,5 +12,7 @@ public class Program {
         System.out.println(Nick);
         System.out.println(Tom);
         System.out.println(Kate);
+
+        System.out.println("Last generated Id: " + UserIdsGenerator.getInstance().lastGeneratedId());
     }
 }

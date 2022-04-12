@@ -15,7 +15,7 @@ public class Program {
         User test6 = new User("test6" , 20);
         User test7 = new User("test7" , 30);
 
-        UsersArrayList usersList = new UsersArrayList();
+        UsersList usersList = new UsersArrayList();
         System.out.println(usersList);
 
         usersList.addUser(Bob);
@@ -24,18 +24,33 @@ public class Program {
         usersList.addUser(Kate);
         System.out.println(usersList);
 
-        usersList.addUser(test1);
-        usersList.addUser(test2);
-        usersList.addUser(test3);
-        usersList.addUser(test4);
-        usersList.addUser(test5);
-        usersList.addUser(test6);
-        usersList.addUser(test7);
+        usersList.addUsers(test5, test7, test6, test4, test2, test3, test1);
         System.out.println(usersList);
 
-        System.out.println("Retrieve the number of users - " + usersList.numberOfUsers());
+        System.out.println("Number of users - " + usersList.numberOfUsers());
         System.out.println("Get by id 7 - " + usersList.retrieveByID(7));
         System.out.println("Get by index 10 - " + usersList.retrieveByIndex(10));
-        System.out.println("Try to get incorrect index 14 - " + usersList.retrieveByIndex(14));
+
+        System.out.println("\nINCORRECT CASES:");
+        try {
+            System.out.println("Try to get User with non existing index: 14");
+            usersList.retrieveByIndex(14);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            System.out.println("Try to get User with non existing ID: 15");
+            usersList.retrieveByID(15);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            System.out.println("Try to add existing User: test3");
+            usersList.addUser(test3);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

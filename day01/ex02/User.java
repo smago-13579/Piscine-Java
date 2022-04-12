@@ -4,7 +4,7 @@ public class User {
     private String name;
     private Integer balance;
 
-    User(String name, int balance) {
+    public User(String name, int balance) {
         this.name = name;
 
         if (balance < 0) {

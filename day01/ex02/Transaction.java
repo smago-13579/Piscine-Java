@@ -3,28 +3,30 @@ import java.util.UUID;
 public class Transaction {
 
     public enum TransferCategory {
-        debit,
-        credit
+        DEBIT,
+        CREDIT
     }
 
     private UUID id;
     private User recipient;
     private User sender;
-    private Integer transferAmount;
+    private Integer amount;
     private TransferCategory category;
 
-    Transaction(User recipient, User sender, Integer amount, TransferCategory category) {
-        if ((amount > 0 && category == TransferCategory.credit) ||
-                (amount < 0 && category == TransferCategory.debit)) {
+    public Transaction(User recipient, User sender, Integer amount, TransferCategory category) {
+        if ((amount > 0 && category == TransferCategory.CREDIT) ||
+                (amount < 0 && category == TransferCategory.DEBIT)) {
+            System.err.println("Can't create Transaction");
             System.err.println("Wrong Transfer Category");
-        } else if ((category == TransferCategory.debit && sender.getBalance() < amount) ||
-                (category == TransferCategory.credit && sender.getBalance() < -amount)) {
+        } else if ((category == TransferCategory.DEBIT && sender.getBalance() < amount) ||
+                (category == TransferCategory.CREDIT && sender.getBalance() < -amount)) {
+            System.err.println("Can't create Transaction");
             System.err.println("Insufficient balance");
         } else {
             this.id = UUID.randomUUID();
             this.recipient = recipient;
             this.sender = sender;
-            this.transferAmount = amount;
+            this.amount = amount;
             this.category = category;
         }
     }
@@ -33,35 +35,34 @@ public class Transaction {
     public String toString() {
         String str = "Transaction{ ";
 
-        if (this.category == TransferCategory.debit) {
+        if (this.category == TransferCategory.DEBIT) {
             str += this.recipient.getName() + " -> " + this.sender.getName() + ", +"
-                    + this.transferAmount + ", INCOME, " + this.id + " }";
-        }
-        else {
+                    + this.amount + ", INCOME, " + this.id + " }";
+        } else {
             str += this.sender.getName() + " -> " + this.recipient.getName() + ", "
-                    + this.transferAmount + ", OUTCOME, " + this.id + " }";
+                    + this.amount + ", OUTCOME, " + this.id + " }";
         }
 
         return str;
     }
 
-    UUID    getUUID() {
+    public UUID getUUID() {
         return this.id;
     }
 
-    User    getRecipient() {
+    public User getRecipient() {
         return this.recipient;
     }
 
-    User    getSender() {
+    public User getSender() {
         return this.sender;
     }
 
-    int     getTransferAmount() {
-        return this.transferAmount;
+    public int getAmount() {
+        return this.amount;
     }
 
-    TransferCategory    getTransferCategory() {
+    public TransferCategory getTransferCategory() {
         return this.category;
     }
 }

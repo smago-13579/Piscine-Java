@@ -4,12 +4,12 @@ public class User {
     private String name;
     private Integer balance;
 
-    User(String name, int balance) {
+    public User(String name, int balance) {
         this.name = name;
 
         if (balance < 0) {
             this.balance = 0;
-            System.err.println("Incorrect balance!!!");
+            System.err.println("Incorrect balance: " + balance + " for user: " + name);
         } else {
             this.balance = balance;
         }
@@ -19,7 +19,7 @@ public class User {
     @Override
     public String toString() {
         return "User{ id=" + this.id +
-                ", name='" + this.name + "\'" +
+                ", name='" + this.name + "'" +
                 ", balance=" + this.balance + " }";
     }
 
