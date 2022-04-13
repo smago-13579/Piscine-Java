@@ -5,38 +5,58 @@ public class Program {
     public static void main(String[] args) {
         User Bob = new User("Bob", 1000);
         User Nick = new User("Nick", 1000);
-        User Tom = new User("Tom", 500);
-        User Kate = new User("Kate", 670);
-        System.out.println("Last generated Id: " + UserIdsGenerator.getInstance().getId());
 
-        UUID id1 = UUID.randomUUID();
-        UUID id2 = UUID.randomUUID();
-        UUID id3 = UUID.randomUUID();
-        UUID id4 = UUID.randomUUID();
+        System.out.println("Bob: " + Bob + "\nBob list: \n" + Bob.getList());
+        System.out.println("Nick: " + Nick + "\nNick list: \n" + Nick.getList());
+
+        System.out.println("\nLET'S CREATE TRANSACTIONS:");
+        createTransaction(Bob, Nick, 200);
+        createTransaction(Nick, Bob, 100);
+        createTransaction(Nick, Bob, 150);
+        createTransaction(Nick, Bob, 50);
+
+        System.out.println("Bob: " + Bob + "\nBob list: \n" + Bob.getList());
+        System.out.println("Nick: " + Nick + "\nNick list: \n" + Nick.getList());
+
+        System.out.println("\nREMOVE TRANSACTION:");
+        Transaction[] transactions = Bob.getList().toArray();
+        Transaction toRemove = transactions[1];
+        Bob.getList().remove(toRemove.getUUID());
+        Nick.getList().remove(toRemove.getUUID());
+        System.out.println("Bob: " + Bob + "\nBob list: \n" + Bob.getList());
+        System.out.println("Nick: " + Nick + "\nNick list: \n" + Nick.getList());
+
+        try {
+            System.out.println("\nTRY TO REMOVE TRANSACTION WITH WRONG UUID:");
+            Bob.getList().remove(toRemove.getUUID());
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            System.out.println("\nTRY TO REMOVE TRANSACTION WITH null UUID:");
+            Nick.getList().remove(null);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void createTransaction(User recipient, User sender, int amount) {
         Transaction.TransferCategory debit = Transaction.TransferCategory.DEBIT;
         Transaction.TransferCategory credit = Transaction.TransferCategory.CREDIT;
 
-        Transaction Tr1 = new Transaction(id1, Bob, Nick, 200, debit);
-        Transaction Tr2 = new Transaction(id1, Bob, Nick, -200, credit);
+        if (sender.getBalance() >= amount) {
+            UUID id = UUID.randomUUID();
+            Transaction tr1 = new Transaction(id, recipient, sender, amount, debit);
+            Transaction tr2 = new Transaction(id, recipient, sender, -1 * amount, credit);
 
-        Transaction Tr3 = new Transaction(id2, Bob, Nick, 200, debit);
-        Transaction Tr4 = new Transaction(id2, Bob, Nick, -200, credit);
+            recipient.setBalance(recipient.getBalance() + amount);
+            sender.setBalance(sender.getBalance() - amount);
 
-        Transaction Tr5 = new Transaction(id3, Nick, Bob, -100, credit);
-        Transaction Tr6 = new Transaction(id3, Nick, Bob, 100, debit);
-
-        System.out.println("Bob list:");
-        Transaction[] tmp = Bob.getList().toArray();
-        for (int i = 0; i < tmp.length; i++ ) {
-            tmp[i].TransactionInfo();
+            recipient.getList().add(tr1);
+            sender.getList().add(tr2);
+        } else {
+            System.err.println("Insufficient balance");
         }
-        System.out.println("Bob list after remove:");
-        Bob.getList().removeTransaction(id2);
-        tmp = Bob.getList().toArray();
-        for (int i = 0; i < tmp.length; i++ ) {
-            tmp[i].TransactionInfo();
-        }
-
-        Bob.getList().removeTransaction(id4);
     }
 }

@@ -29,7 +29,7 @@ public class UsersArrayList implements UsersList {
         }
         storage[size] = user;
         size++;
-        System.out.println("User added: " + user.getName());
+        System.out.println("User with id = " + user.getId() + " is added");
     }
 
     public User retrieveByID(int id) {
@@ -38,7 +38,7 @@ public class UsersArrayList implements UsersList {
                 return storage[i];
             }
         }
-        throw new UserNotFoundException("Exception: User Not Found by id " + id);
+        throw new UserNotFoundException("User with id = " + id + " not found");
     }
 
     public User retrieveByIndex(int index) {

@@ -13,7 +13,7 @@ public class Transaction {
     private Integer amount;
     private TransferCategory category;
 
-    public Transaction(User recipient, User sender, Integer amount, TransferCategory category) {
+    public Transaction(UUID id, User recipient, User sender, Integer amount, TransferCategory category) {
         if ((amount > 0 && category == TransferCategory.CREDIT) ||
                 (amount < 0 && category == TransferCategory.DEBIT)) {
             System.err.println("Can't create Transaction");
@@ -23,7 +23,7 @@ public class Transaction {
             System.err.println("Can't create Transaction");
             System.err.println("Insufficient balance");
         } else {
-            this.id = UUID.randomUUID();
+            this.id = id;
             this.recipient = recipient;
             this.sender = sender;
             this.amount = amount;

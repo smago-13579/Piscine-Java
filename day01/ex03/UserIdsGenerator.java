@@ -1,7 +1,6 @@
-
 public class UserIdsGenerator {
-    private static final UserIdsGenerator INSTANCE = new UserIdsGenerator();
-    private int Id = 0;
+    private static UserIdsGenerator INSTANCE = new UserIdsGenerator();
+    private int id = 0;
 
     private UserIdsGenerator() {
     }
@@ -11,10 +10,10 @@ public class UserIdsGenerator {
     }
 
     public int generateId() {
-        return ++Id;
+        return ++id;
     }
 
-    public int getId() {
-        return Id;
+    public int lastGeneratedId() {
+        return this.id;
     }
 }

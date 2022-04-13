@@ -24,7 +24,13 @@ public class Program {
         usersList.addUser(Kate);
         System.out.println(usersList);
 
-        usersList.addUsers(test5, test7, test6, test4, test2, test3, test1);
+        usersList.addUser(test5);
+        usersList.addUser(test7);
+        usersList.addUser(test6);
+        usersList.addUser(test4);
+        usersList.addUser(test2);
+        usersList.addUser(test3);
+        usersList.addUser(test1);
         System.out.println(usersList);
 
         System.out.println("Number of users - " + usersList.numberOfUsers());
