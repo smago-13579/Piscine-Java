@@ -1,31 +1,21 @@
-package com.company;
 
-import java.io.*;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Parse {
-    private Map<String, String> formats = new HashMap<String, String>();
+    private static final Map<String, String> formats = new HashMap<>();
 
-    public Parse(String str) {
-        String key;
-        String value;
-        int begin = 0;
-        int end;
-
-        while ((end = str.indexOf(',', begin)) != -1) {
-            key = str.substring(begin, end);
-            begin = ++end;
-            while (str.charAt(begin) == ' ' || str.charAt(begin) == ',') {
-                begin++;
+    public static void parseSignatures(List<String> file) {
+        for (String str : file) {
+            if (!str.isEmpty()) {
+                String[] data = str.split(",");
+                formats.put(data[0].trim(), data[1].trim());
             }
-            end = str.indexOf('\n', begin);
-            value = str.substring(begin, end);
-            begin = ++end;
-            formats.put(key, value);
         }
     }
 
-    public Map<String, String> getFormats() {
+    public static Map<String, String> getFormats() {
         return formats;
     }
 }
