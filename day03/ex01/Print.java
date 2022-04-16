@@ -1,22 +1,27 @@
 
 public class Print {
-    int count = 0;
+    private Category category = Category.EGG;
+
+    private enum Category {
+        EGG,
+        HEN
+    }
 
     public synchronized void printEgg() throws InterruptedException {
-        while (count != 0) {
+        if (category != Category.EGG) {
             wait();
         }
         System.out.println("Egg");
-        count = 1;
+        category = Category.HEN;
         notify();
     }
 
     public synchronized void printHen() throws InterruptedException {
-        while (count != 1) {
+        if (category != Category.HEN) {
             wait();
         }
         System.out.println("Hen");
-        count = 0;
+        category = Category.EGG;
         notify();
     }
 }
