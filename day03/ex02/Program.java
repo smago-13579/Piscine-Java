@@ -70,7 +70,7 @@ public class Program {
     private static void runThreads() {
         try {
             for (int i = 0; i < threads.length; i++) {
-                threads[i].run();
+                threads[i].start();
             }
 
             for (int i = 0; i < threads.length; i++) {
