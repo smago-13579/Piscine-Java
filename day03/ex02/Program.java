@@ -68,8 +68,16 @@ public class Program {
     }
 
     private static void runThreads() {
-        for (int i = 0; i < threads.length; i++) {
-            threads[i].run();
+        try {
+            for (int i = 0; i < threads.length; i++) {
+                threads[i].run();
+            }
+
+            for (int i = 0; i < threads.length; i++) {
+                threads[i].join();
+            }
+        } catch (InterruptedException e) {
+            System.out.println(e.getMessage());
         }
     }
 }
