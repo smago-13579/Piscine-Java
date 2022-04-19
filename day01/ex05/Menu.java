@@ -152,6 +152,11 @@ public class Menu {
         try {
             int userId = Integer.parseInt(str);
             Transaction[] transactions = service.getTransactionsByUserId(userId);
+
+            if (transactions == null) {
+                System.out.println("\t---EMPTY---");
+                return;
+            }
             printTransactions(userId, transactions);
         } catch (NumberFormatException e) {
             System.out.println("Invalid number in: " + str);
