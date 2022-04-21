@@ -43,7 +43,7 @@ public class Program {
         }
     }
 
-    public static void updateData(String file, JdbcDataSource dataSource) {
+    private static void updateData(String file, JdbcDataSource dataSource) {
         try (Connection con = dataSource.getConnection();
              Statement st = con.createStatement()) {
             InputStream input = Program.class.getClassLoader().getResourceAsStream(file);
