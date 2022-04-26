@@ -85,10 +85,9 @@ public class Utils {
 
             if (i + 1 < params.length) {
                 type += ", ";
-            } else {
-                type += ")";
             }
         }
+        type += ")";
         return type;
     }
 
