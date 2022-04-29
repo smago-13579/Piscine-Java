@@ -15,7 +15,7 @@ public class Main {
         Renderer renderer = new RendererErrImpl(preProcessor);
         PrinterWithPrefixImpl printer = new PrinterWithPrefixImpl(renderer);
         printer.setPrefix ("Prefix ");
-        printer.print ("Hello!") ;
+        printer.print ("Hello!");
 
         System.out.println("\n---PRINTER FROM SPRING CONTEXT---");
         ApplicationContext context = new ClassPathXmlApplicationContext("context.xml");
