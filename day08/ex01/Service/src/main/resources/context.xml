@@ -12,6 +12,7 @@
         <constructor-arg type="java.lang.String" index="0" name="url" value="${db.url}"/>
         <constructor-arg type="java.lang.String" index="1" name="username" value="${db.user}"/>
         <constructor-arg type="java.lang.String" index="2" name="password" value="${db.password}"/>
+        <property name="driverClassName" value="${db.driver.name}"/>
     </bean>
 
     <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
@@ -28,13 +29,8 @@
         <constructor-arg ref="hikariDataSource"/>
     </bean>
 
-    <bean id="namedJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
-        <constructor-arg ref="driverManagerDataSource"/>
-    </bean>
-
     <bean id="usersRepositoryJdbcTemplate" class="school21.spring.service.repositories.UsersRepositoryJdbcTemplateImpl">
         <constructor-arg ref="driverManagerDataSource"/>
-        <property name="jdbcTemplate" ref="namedJdbcTemplate"/>
     </bean>
 
 </beans>

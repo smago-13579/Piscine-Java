@@ -57,13 +57,13 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
     public void save(User entity) {
         try (Connection con = dataSource.getConnection();
              Statement st = con.createStatement()) {
-            ResultSet rs = st.executeQuery("INSERT INTO models.user (email) VALUES ('"
-                    + entity.getEmail() + "') RETURNING id");
+            int result = st.executeUpdate("INSERT INTO models.user (id, email) VALUES ("
+                    + entity.getIdentifier() + ", '"
+                    + entity.getEmail() + "');");
 
-            if (!rs.next()) {
-                throw new SQLException("INTERNAL ERROR: User wasn't save");
+            if (result == 0) {
+                System.err.println("User wasn't saved with id: " + entity.getIdentifier());
             }
-            entity.setIdentifier(rs.getLong(1));
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
@@ -75,10 +75,10 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
              PreparedStatement st = con.prepareStatement(upQuery)) {
             st.setString(1, entity.getEmail());
             st.setLong(2, entity.getIdentifier());
-            ResultSet rs = st.executeQuery();
+            int result = st.executeUpdate();
 
-            if (!rs.next()) {
-                throw new SQLException("INTERNAL ERROR: User wasn't updated");
+            if (result == 0) {
+                System.err.println("User wasn't updated with id: " + entity.getIdentifier());
             }
         } catch (SQLException e) {
             System.err.println(e.getMessage());
@@ -89,10 +89,10 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
     public void delete(Long id) {
         try (Connection con = dataSource.getConnection();
              PreparedStatement st = con.prepareStatement(dlQuery + id)) {
-            ResultSet rs = st.executeQuery();
+            int result = st.executeUpdate();
 
-            if (!rs.next()) {
-                throw new SQLException("INTERNAL ERROR: User wasn't deleted");
+            if (result == 0) {
+                System.err.println("User not found with id: " + id);
             }
         } catch (SQLException e) {
             System.err.println(e.getMessage());
@@ -107,7 +107,7 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
             ResultSet rs = st.executeQuery();
 
             if (!rs.next()) {
-                return null;
+                return Optional.empty();
             }
             return Optional.of(new User(rs.getLong(1), rs.getString(2)));
         } catch (SQLException e) {
