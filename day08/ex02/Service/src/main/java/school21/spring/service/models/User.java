@@ -3,6 +3,13 @@ package school21.spring.service.models;
 public class User {
     private Long identifier;
     private String email;
+    private String password;
+
+    public User(Long identifier, String email, String password) {
+        this.identifier = identifier;
+        this.email = email;
+        this.password = password;
+    }
 
     public User(Long identifier, String email) {
         this.identifier = identifier;
@@ -11,6 +18,14 @@ public class User {
 
     public User() {
 
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Long getIdentifier() {
@@ -34,6 +49,7 @@ public class User {
         return "User{" +
                 "identifier=" + identifier +
                 ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
                 '}';
     }
 }
