@@ -73,7 +73,7 @@ public class TransactionsLinkedList implements TransactionsList {
 
     public Transaction[]    toArray() {
         if (this.size == 0) {
-            return null;
+            return new Transaction[0];
         }
         Transaction[] result = new Transaction[this.size];
         int i = 0;
